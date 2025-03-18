@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Interactiva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .calculator h1 {
+            font-size: 24px;
+            color: #4A90E2;
+            margin-bottom: 20px;
+        }
+
+        .input-container input {
+            width: 100px;
+            padding: 10px;
+            margin: 5px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .button-container button {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            background-color: #4A90E2;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button-container button:hover {
+            background-color: #357ABD;
+        }
+
+        .result-container {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result-container span {
+            color: #4A90E2;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <h1>Calculadora Interactiva</h1>
+    
+    <div class="input-container">
+        <input type="text" id="expression" placeholder="Ej. 2+3*4-5">
+    </div>
+    
+    <div class="button-container">
+        <button onclick="calculate('sum')">Sumar</button>
+        <button onclick="calculate('subtract')">Restar</button>
+        <button onclick="calculate('multiply')">Multiplicar</button>
+        <button onclick="calculate('divide')">Dividir</button>
+        <button onclick="evaluateExpression()">Evaluar Expresión</button>
+    </div>
+    
+    <div class="result-container">
+        Resultado: <span id="result">0</span>
+    </div>
+</div>
+
+<script>
+    function calculate(operation) {
+        const num1 = parseFloat(document.getElementById("num1").value);
+        const num2 = parseFloat(document.getElementById("num2").value);
+        let result = 0;
+        
+        if (isNaN(num1) || isNaN(num2)) {
+            alert("Por favor ingresa ambos números.");
+            return;
+        }
+
+        switch (operation) {
+            case 'sum':
+                result = num1 + num2;
+                break;
+            case 'subtract':
+                result = num1 - num2;
+                break;
+            case 'multiply':
+                result = num1 * num2;
+                break;
+            case 'divide':
+                if (num2 === 0) {
+                    alert("No se puede dividir entre 0.");
+                    return;
+                }
+                result = num1 / num2;
+                break;
+        }
+
+        document.getElementById("result").innerText = result;
+    }
+
+    function evaluateExpression() {
+        const expression = document.getElementById("expression").value;
+
+        try {
+            // Usamos eval() para evaluar la expresión matemática ingresada.
+            // El eval() respeta el orden de las operaciones matemáticas.
+            const result = eval(expression);
+
+            if (isNaN(result)) {
+                throw new Error("Resultado no válido");
+            }
+
+            document.getElementById("result").innerText = result;
+        } catch (e) {
+            alert("Error en la expresión matemática. Por favor revisa tu entrada.");
+        }
+    }
+</script>
+
+</body>
+</html>
